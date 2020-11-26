@@ -50,7 +50,7 @@ public class ListaEncadeada {
      * @param chave parâmetro que será pesquisado na lista
      * @return retorna verdadeiro caso encontre o valor na lista
      */
-    public boolean procurarChave(String chave) {
+    public boolean existeChave(String chave) {
 
         // percorre a ListaEncadeada
         for (No no = inicio; no != null; no = no.proximo)
@@ -58,6 +58,15 @@ public class ListaEncadeada {
             if (Objects.equals(chave, no.chave)) return true;
         // não encontrou o elemento
         return false;
+    }
+    public No procurarChave(String chave) {
+
+        // percorre a ListaEncadeada
+        for (No no = inicio; no != null; no = no.proximo)
+            //encontrou o valor
+            if (Objects.equals(chave, no.chave)) return no;
+        // não encontrou o elemento
+        return null;
     }
 
     /**
@@ -76,10 +85,58 @@ public class ListaEncadeada {
     }
 
     /**
+     * Método responsável por inserir um novo na ListaEncadeada ja posicionando de maneira ordenada(Descendente)
+     * @param valor - valor do nó
+     * @param chave - chave do nó
+     */
+    public void insereOrdenado(int valor, String chave){
+        //Instancia uma variável do tipo No com valores passados por parâmetro
+        No novoNo = new No(valor, chave);
+        //Verifica se existe elementos na lista ou se o valor do no inicial é menor ou igual ao do novoNo
+        if (inicio == null || inicio.valor <= novoNo.valor)
+        {
+            /*
+               caso verdadeiro o valor do nó inicial passa a ser o novoNo e próximo nó passa se tornar o valor do nó
+               inicial
+             */
+            novoNo.proximo = inicio;
+            inicio = novoNo;
+        }
+        else
+        {
+            /*
+            !! valor do nó  inicial é maior
+               caso falso o valor do nó inicial nao se altera
+             */
+
+            // instancia uma variável do tipo nó, atribui-se o nó inicial para variável atual
+            No atual = inicio;
+            /*
+            Esse loop localiza a posição do nó anterior a posição de inserção do novoNó
+            Enquanto o valor do próximo nó náo for nulo !!e o valor  do próximoNo valor for maior que o do novoNo
+            */
+            while (atual.proximo != null && atual.proximo.valor > novoNo.valor)
+            {
+                //Move o nó atual para direita atribuindo o próximo nó como seu valor
+                atual  = atual.proximo;
+            }
+
+            /*
+                insere o novoNo entre o nó atual e o próximo nó do atual
+             */
+           // o próximo nó em relação ao novoNo se torna o nó próximo nó do atual
+            novoNo.proximo = atual.proximo;
+            //   o próximo nó em relação ao atual se torna o novoNo
+            atual.proximo = novoNo;
+        }
+    }
+
+    /**
      * Método responsável por retirar da lista o nó inicial, reposicionando o próximo nó para a posição inicial
      */
     public void removeInicio() {
 
+        //move o inicio da lista para o próximo nó
         inicio = inicio.proximo;
     }
 

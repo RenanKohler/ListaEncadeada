@@ -3,7 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class teste {
+public class ListaEncadeadaDriver {
+
 
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
@@ -13,6 +14,7 @@ public class teste {
         ListaEncadeada lista = new ListaEncadeada();
         lista = criaLisaEncadeada(dir, busca, false);
         System.out.println(lista.exibeLista());
+
     }
 
     /**
@@ -29,14 +31,15 @@ public class teste {
         for (File fileEntry : Objects.requireNonNull(dir.listFiles())) {
             if (fileEntry.getName().contains(".txt")) {
                 int count = getResultCount(fileEntry, busca);
-                retorno.insereInicio(count, fileEntry.getName());
+                retorno.insereOrdenado(count, fileEntry.getName());
+//                retorno.insereInicio(count, fileEntry.getName());
             }
         }
-        if (asc) {
-            retorno.ordenar();
-        } else {
-            retorno.ordenarDesc();
-        }
+//        if (asc) {
+//            retorno.ordenar();
+//        } else {
+//            retorno.ordenarDesc();
+//        }
         return retorno;
     }
 
@@ -65,4 +68,6 @@ public class teste {
         }
         return count;
     }
+
+
 }
